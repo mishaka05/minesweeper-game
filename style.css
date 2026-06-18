@@ -1,0 +1,41 @@
+body{
+    background:#111827;
+    color:white;
+    text-align:center;
+    font-family:Arial,sans-serif;
+}
+
+#board{
+    width:max-content;
+
+    margin:30px auto;
+
+    display:grid;
+
+    grid-template-columns:repeat(9,50px);
+
+    gap:2px;
+}
+
+.cell{
+    width:50px;
+    height:50px;
+
+    background:#374151;
+
+    border:none;
+
+    cursor:pointer;
+
+    font-weight:bold;
+    font-size:18px;
+}
+
+.cell:hover{
+    background:#4b5563;
+}
+
+.revealed{
+    background:#d1d5db;
+    color:black;
+}

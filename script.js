@@ -2,6 +2,7 @@ const SIZE = 9;
 const MINES = 10;
 const newGameBtn =
 document.getElementById("new-game");
+const resetBtn = document.getElementById("reset-btn");
 let revealedCount = 0;
 let flagsPlaced = 0;
 let timer = 0;
@@ -243,6 +244,7 @@ function checkWin(){
 }
 
 function toggleFlag(event){
+    console.log("flag clicked");
 if(gameOver){
     return;
 }
@@ -266,6 +268,7 @@ if(gameOver){
     else{
         event.target.textContent = "";
     }
+    
 
 }
 function revealAllMines(){
@@ -319,6 +322,10 @@ function newGame(){
 }
 newGame();
 newGameBtn.addEventListener(
+    "click",
+    newGame
+);
+resetBtn.addEventListener(
     "click",
     newGame
 );

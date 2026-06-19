@@ -11,7 +11,11 @@ let gameOver = false;
 let bestTime =
 Number(localStorage.getItem("bestTime"))
 || Infinity;
+let gamesPlayed =
+    Number(localStorage.getItem("gamesPlayed")) || 0;
 
+let gamesWon =
+    Number(localStorage.getItem("gamesWon")) || 0;
 
 let boardData = [];
 const board = document.getElementById("board");
@@ -187,6 +191,11 @@ function revealPosition(row, col){
         gameOver = true;
 
         clearInterval(timerInterval);
+        gamesWon++;
+
+saveStats();
+
+updateStats();
 
         alert("🎉 You Win!");
     }
@@ -253,6 +262,8 @@ function checkWin(){
         }
 
     }
+    
+
 
     const totalSafeCells = (SIZE * SIZE) - MINES;
 
@@ -279,6 +290,35 @@ bestTime === Infinity
 : bestTime + "s";
 
 }
+
+}
+function updateStats(){
+
+    document.getElementById("games-played")
+        .textContent = gamesPlayed;
+
+    document.getElementById("games-won")
+        .textContent = gamesWon;
+
+    const winRate =
+        gamesPlayed === 0
+        ? 0
+        : Math.round((gamesWon / gamesPlayed) * 100);
+
+    document.getElementById("win-rate")
+        .textContent = winRate + "%";
+}
+function saveStats(){
+
+    localStorage.setItem(
+        "gamesPlayed",
+        gamesPlayed
+    );
+
+    localStorage.setItem(
+        "gamesWon",
+        gamesWon
+    );
 
 }
 
@@ -357,6 +397,11 @@ function updateMineCounter(){
 
 }
 function newGame(){
+    gamesPlayed++;
+
+saveStats();
+
+updateStats();
     setDifficulty();
     console.log("newGame running");
     flagsPlaced = 0;
@@ -371,6 +416,7 @@ function newGame(){
     revealedCount = 0;
     flagsPlaced = 0;
     gameOver = false;
+    
 
 
     createBoard();
@@ -380,6 +426,7 @@ function newGame(){
 
     startTimer();
 }
+updateStats();
 newGame();
 newGameBtn.addEventListener(
     "click",

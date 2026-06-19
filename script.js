@@ -192,7 +192,7 @@ function revealPosition(row, col){
 
         clearInterval(timerInterval);
         gamesWon++;
-
+        
 saveStats();
 
 updateStats();
@@ -435,7 +435,4 @@ newGameBtn.addEventListener(
 resetBtn.addEventListener(
     "click",
     newGame
-);
-button.classList.add(
-    `count-${cellData.count}`
 );

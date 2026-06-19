@@ -1,5 +1,5 @@
-const SIZE = 9;
-const MINES = 10;
+let SIZE = 9;
+let MINES = 10;
 const newGameBtn =
 document.getElementById("new-game");
 const resetBtn = document.getElementById("reset-btn");
@@ -8,6 +8,9 @@ let flagsPlaced = 0;
 let timer = 0;
 let timerInterval;
 let gameOver = false;
+let bestTime =
+Number(localStorage.getItem("bestTime"))
+|| Infinity;
 
 
 let boardData = [];
@@ -49,6 +52,27 @@ function createBoard() {
     }
 
     console.log(boardData);
+}
+function setDifficulty(){
+
+    const difficulty =
+        document.getElementById("difficulty").value;
+
+    if(difficulty === "easy"){
+        SIZE = 8;
+        MINES = 8;
+    }
+
+    else if(difficulty === "medium"){
+        SIZE = 9;
+        MINES = 10;
+    }
+
+    else{
+        SIZE = 12;
+        MINES = 20;
+    }
+
 }
 
 
@@ -157,15 +181,16 @@ function revealPosition(row, col){
     cellData.revealed = true;
     revealedCount++;
     if(
-    revealedCount === (SIZE * SIZE) - MINES
-    && !gameOver
-){
-    gameOver = true;
+        revealedCount === (SIZE * SIZE) - MINES
+        && !gameOver
+    ){
+        gameOver = true;
 
-    clearInterval(timerInterval);
+        clearInterval(timerInterval);
 
-    alert("🎉 You Win!");
-}
+        alert("🎉 You Win!");
+    }
+
     const button = document.querySelector(
         `[data-row="${row}"][data-col="${col}"]`
     );
@@ -173,15 +198,15 @@ function revealPosition(row, col){
     button.classList.add("revealed");
 
     if(cellData.mine){
-
         button.textContent = "💣";
         return;
     }
 
     if(cellData.count > 0){
-
         button.textContent = cellData.count;
-
+        button.classList.add(
+            `count-${cellData.count}`
+        );
         return;
     }
 
@@ -201,16 +226,13 @@ function revealCell(event){
 
     if(cellData.mine){
         gameOver = true;
-       revealAllMines();
-       clearInterval(timerInterval);
-
-alert("Game Over!");
-
-return;
+        revealAllMines();
+        clearInterval(timerInterval);
+        alert("Game Over!");
+        return;
     }
 
     revealPosition(row, col);
-    
 
 }
 
@@ -241,6 +263,22 @@ function checkWin(){
         alert("You Win!");
 
     }
+    if(timer < bestTime){
+
+    bestTime = timer;
+
+    localStorage.setItem(
+        "bestTime",
+        timer
+    );
+    document
+.getElementById("best-time")
+.textContent =
+bestTime === Infinity
+? "--"
+: bestTime + "s";
+
+}
 
 }
 
@@ -319,11 +357,15 @@ function updateMineCounter(){
 
 }
 function newGame(){
+    setDifficulty();
     console.log("newGame running");
     flagsPlaced = 0;
     updateMineCounter();
 
     board.innerHTML = "";
+    document
+.getElementById("difficulty")
+.addEventListener("change", newGame);
 
     boardData = [];
     revealedCount = 0;
@@ -346,4 +388,7 @@ newGameBtn.addEventListener(
 resetBtn.addEventListener(
     "click",
     newGame
+);
+button.classList.add(
+    `count-${cellData.count}`
 );

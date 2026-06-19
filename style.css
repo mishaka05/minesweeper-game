@@ -43,3 +43,42 @@ body{
     background:#d1d5db;
     color:black;
 }
+.count-1{
+    color: blue;
+    font-weight: bold;
+}
+
+.count-2{
+    color: green;
+    font-weight: bold;
+}
+
+.count-3{
+    color: red;
+    font-weight: bold;
+}
+
+.count-4{
+    color: navy;
+    font-weight: bold;
+}
+
+.count-5{
+    color: maroon;
+    font-weight: bold;
+}
+
+.count-6{
+    color: teal;
+    font-weight: bold;
+}
+
+.count-7{
+    color: purple;
+    font-weight: bold;
+}
+
+.count-8{
+    color: gray;
+    font-weight: bold;
+}

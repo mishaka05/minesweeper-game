@@ -9,6 +9,7 @@ let timer = 0;
 let timerInterval;
 let gameOver = false;
 
+
 let boardData = [];
 const board = document.getElementById("board");
 
@@ -262,12 +263,21 @@ if(gameOver){
     cellData.flagged = !cellData.flagged;
 
     if(cellData.flagged){
-        event.target.textContent = "🚩";
-        flagsPlaced++;
-    }
-    else{
-        event.target.textContent = "";
-    }
+
+    event.target.textContent = "🚩";
+
+    flagsPlaced++;
+
+}
+else{
+
+    event.target.textContent = "";
+
+    flagsPlaced--;
+
+}
+
+updateMineCounter();
     
 
 }
@@ -302,8 +312,16 @@ function startTimer(){
     },1000);
 
 }
+function updateMineCounter(){
+
+    document.getElementById("mine-count")
+        .textContent = MINES - flagsPlaced;
+
+}
 function newGame(){
     console.log("newGame running");
+    flagsPlaced = 0;
+    updateMineCounter();
 
     board.innerHTML = "";
 
